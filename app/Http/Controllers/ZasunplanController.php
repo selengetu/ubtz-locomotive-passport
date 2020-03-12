@@ -46,36 +46,22 @@ class ZasunplanController extends Controller
         $locserial=LocSerial::orderBy('sericode', 'ASC')->get();
         $startdate= Input::get('mach_start');
         $enddate= Input::get('mach_end');
-        $machinist= Input::get('machinist'); 
-        $z= Input::get('zurch_type'); 
+    
         $query = "";
-        if ($machinist!=NULL && $machinist !=0) {
-             $query.=" and mashcode = '".$machinist."'";
-         }
-         else 
-         {
-             $query.=" ";
-         }
-         if ($z!=NULL && $z!=0) {
-             $query.=" and fault_no = '".$z."'";
-         }
-         else 
-         {
-             $query.=" ";
-         }
+       
            if ($startdate !=0 && $startdate && $enddate !=0 && $enddate !=NULL) {
-             $query.=" and solilt_begintime between TO_DATE( '".$startdate."' , 'yyyy/mm/dd') and TO_DATE( '".$enddate."', 'yyyy/mm/dd')";
+             $query.=" and repindate between TO_DATE( '".$startdate."' , 'yyyy/mm/dd') and TO_DATE( '".$enddate."', 'yyyy/mm/dd')";
          }
         else
         {
-            $query.=" and solilt_begintime between sysdate-10 and sysdate";
+            $query.=" and repindate between sysdate-10 and sysdate";
             $startdate= Carbon::today()->subDays(10)->toDateString();
             $enddate=  Carbon::today()->toDateString();
 
         }
 
 
-        $zasunplan=DB::select('select  * from V_ZAS_SOLILT t where 1=1 '.$query.'');
+        $zasunplan=DB::select('select  * from V_ZASPLAN t where 1=1 '.$query.'');
         return view('devter.zasunplan')->with(['part' => $part,'break' => $break,'zasdetail' => $zasdetail,'locserial' => $locserial, 'startdate' =>$startdate, 'enddate' => $enddate, 'zasunplan' => $zasunplan,'rep' => $rep]);
     }
     public function store()

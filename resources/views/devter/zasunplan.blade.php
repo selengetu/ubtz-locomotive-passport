@@ -116,43 +116,31 @@
                   <tr>
                       <td>{{$no}}</td>
 
-                      <td>{{$zasunplans->seriname}} - {{$zasunplans->solilt_zutnumber}}</td>
-                      <td>{{$zasunplans->solilt_sekts}} - {{$zasunplans->solilt__sekts_num}}</td>
-                      <td>{{$zasunplans->solilt_begintime}}</td>
-                      <td>{{$zasunplans->solilt_endtime}}</td>
+                      <td>{{$zasunplans->seriname}} - {{$zasunplans->zutnumber}}</td>
+                      <td>{{$zasunplans->sec}}</td>
+                      <td>{{$zasunplans->repindate}}</td>
+                      <td>{{$zasunplans->repoutdate}}</td>
 
-                      <td>{{$zasunplans->rep_name}}</td>
+                      <td>{{$zasunplans->repshname}}</td>
                       <td>
-                          @if ($zasunplans->solilt_depo == 5)
+                          @if ($zasunplans->depocode == 5)
                               ТЧ-1
-                          @elseif ($zasunplans->solilt_depo == 2)
+                          @elseif ($zasunplans->depocode == 2)
                               ТЧ-2
-                          @elseif ($zasunplans->solilt_depo == 3)
+                          @elseif ($zasunplans->depocode == 3)
                               ТЧ-3
-                          @elseif ($zasunplans->solilt_depo == 1)
+                          @elseif ($zasunplans->depocode == 1)
                               Сүхбаатар
-                          @elseif ($zasunplans->solilt_depo == 13)
+                          @elseif ($zasunplans->depocode == 13)
                               Замын-Үүд
                           @endif
                               </td>
                       <td>{{$zasunplans->gemtel_name}}</td>
-                      <td>      @foreach($zasdetail as $zasdetails)
-                              @if($zasunplans->solilt_id == $zasdetails->solilt_id)
-                                  {{$zasdetails->seri_name}} -  {{$zasdetails->solilt_num}}  <br>
-                              @endif
-                          @endforeach</td>
-                      <td>      @foreach($zasdetail as $zasdetails)
-                              @if($zasunplans->solilt_id == $zasdetails->solilt_id)
-                                  {{$zasdetails->eseri_name}}  -  {{$zasdetails->solilt_enum}} <br>
-                              @endif
-                          @endforeach</td>
-                      <td>      @foreach($zasdetail as $zasdetails)
-                              @if($zasunplans->solilt_id == $zasdetails->solilt_id)
-                                  {{$zasdetails->part_name}}  <br>
-                              @endif
-                          @endforeach</td>
+                      <td>     </td>
+                      <td>      </td>
+                      <td>     </td>
 
-                      <td><a class='btn btn-xs btn-info update' data-toggle='modal' data-target='#myModalup' data-id="{{$zasunplans->solilt_id}}" tag=" {{$zasunplans->solilt_id}} "><span class='glyphicon glyphicon-pencil'></span></a><a class='btn btn-xs btn-danger' tag="{{$zasunplans->solilt_id}}"  href="{{route('zasunplan.destroy', $zasunplans->solilt_id)}}" onclick="return confirm('Энэ засварыг устгах уу?')" ><span class='glyphicon glyphicon-trash'></span></a></td>
+                      <td><a class='btn btn-xs btn-info update' data-toggle='modal' data-target='#myModalup' data-id="{{$zasunplans->repairid}}" tag=" {{$zasunplans->repairid}} "><span class='glyphicon glyphicon-pencil'></span></a><a class='btn btn-xs btn-danger' tag="{{$zasunplans->repairid}}"  href="{{route('zasunplan.destroy', $zasunplans->repairid)}}" onclick="return confirm('Энэ засварыг устгах уу?')" ><span class='glyphicon glyphicon-trash'></span></a></td>
 
                   </tr>
                   <?php $no++; ?>
@@ -926,19 +914,19 @@ detail(marsh);
                       var itag=$(this).attr('tag');
                       $.get('zasunplanfill/'+itag,function(data){
                           $.each(data,function(i,qwe){
-                              $('#upzasid').val(qwe.solilt_id);
-                              $('#upzasid1').val(qwe.solilt_id);
-                              $('#upzas_owndepo').val(qwe.solilt_depo).trigger('change');
-                              $('#upzas_seri').val(qwe.solilt_seri).trigger('change');
-                              $('#upzas_zutnumber').val(qwe.solilt_zutnumber);
-                              $('#upzas_sekts').val(qwe.solilt_sekts).trigger('change');
+                              $('#upzasid').val(qwe.repairid);
+                              $('#upzasid1').val(qwe.repairid);
+                              $('#upzas_owndepo').val(qwe.depocode).trigger('change');
+                              $('#upzas_seri').val(qwe.sericode).trigger('change');
+                              $('#upzas_zutnumber').val(qwe.zutnumber);
+                              $('#upzas_sekts').val(qwe.sec).trigger('change');
                               $('#upzas_sekts_num').val(qwe.solilt__sekts_num);
                               $('#upzas_type').val(qwe.solilt_zastype).trigger('change');
-                              $('#upzas_rep').val(qwe.solilt_rep).trigger('change');
-                              $('#upzas_begindate').val(qwe.solilt_begintime);
-                              $('#upzas_depo').val(qwe.solilt_depo).trigger('change');
-                              $('#upzas_gemtel').val(qwe.solilt_gemtel).trigger('change');
-                              $('#upzas_enddate').val(qwe.solilt_endtime);
+                              $('#upzas_rep').val(qwe.repid).trigger('change');
+                              $('#upzas_begindate').val(qwe.repindate);
+                              $('#upzas_depo').val(qwe.depocode).trigger('change');
+                              $('#upzas_gemtel').val(qwe.gemtel_id).trigger('change');
+                              $('#upzas_enddate').val(qwe.repoutdate);
                           });
 
                       });
