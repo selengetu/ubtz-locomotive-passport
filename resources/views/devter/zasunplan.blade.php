@@ -15,15 +15,7 @@
                         </span>
                     </div>
              <div class="actions">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <a class="joshview1 " id="add" data-toggle="modal" data-target="#myModal1">
-                                <label class="btn btn-transparent green btn-circle btn-sm active">
-                                    <i class="icon icon-plus">
-                                    </i>
-                                    Засвар бүртгэх
-                                </label>
-                            </a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -136,9 +128,21 @@
                           @endif
                               </td>
                       <td>{{$zasunplans->gemtel_name}}</td>
-                      <td>     </td>
-                      <td>      </td>
-                      <td>     </td>
+                      <td>      @foreach($zasdetail as $zasdetails)
+                              @if($zasunplans->repairid == $zasdetails->solilt_id)
+                                  {{$zasdetails->seri_name}} -  {{$zasdetails->solilt_num}}  <br>
+                              @endif
+                          @endforeach</td>
+                      <td>      @foreach($zasdetail as $zasdetails)
+                              @if($zasunplans->repairid == $zasdetails->solilt_id)
+                                  {{$zasdetails->eseri_name}}  -  {{$zasdetails->solilt_enum}} <br>
+                              @endif
+                          @endforeach</td>
+                      <td>      @foreach($zasdetail as $zasdetails)
+                              @if($zasunplans->repairid == $zasdetails->solilt_id)
+                                  {{$zasdetails->part_name}}  <br>
+                              @endif
+                          @endforeach</td>
 
                       <td><a class='btn btn-xs btn-info update' data-toggle='modal' data-target='#myModalup' data-id="{{$zasunplans->repairid}}" tag=" {{$zasunplans->repairid}} "><span class='glyphicon glyphicon-pencil'></span></a><a class='btn btn-xs btn-danger' tag="{{$zasunplans->repairid}}"  href="{{route('zasunplan.destroy', $zasunplans->repairid)}}" onclick="return confirm('Энэ засварыг устгах уу?')" ><span class='glyphicon glyphicon-trash'></span></a></td>
 
@@ -166,237 +170,90 @@
                       </div>
                       <div class="modal-body">
 
-                          <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#home">Үндсэн</a></li>
-                              <li class="menuli1 disabled disabledTab"><a data-toggle="tab" href="#menu1">Материал</a></li>
 
-                          </ul>
-                          <div class="tab-content">
                               <div id="home" class="tab-pane fade in active">
-                                  <form method="post"  action="addzasunplan" id="formzasunplan">
+                                  <form method="post" action="addzasdetail" id="formzasdetail">
                                       <div class="col-md-12">
                                           <div class="col-md-3">
                                               <div class="form-group">
-                                                  <label for="name">Татах хэсэг</label>
-                                                  <select class="form-control select2" id="zas_owndepo" name="zas_owndepo" >
-                                                      <option value="5">ТЧ-1</option>
-                                                      <option value="2">ТЧ-2</option>
-                                                      <option value="3">ТЧ-3</option>
-                                                      <option value="1">Сүхбаатар</option>
-                                                      <option value="13">Замын-Үүд</option>
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Зүтгүүрийн сери</label>
-                                                  <select class="form-control select2" id="zas_seri" name="zas_seri" required="true">
-                                                      <option value="0">Бүгд</option>
-                                                      @foreach($locserial as $locserials)
-                                                          <option value= "{{$locserials->sericode}}"> {{$locserials->sericode}} - {{$locserials->seriname}}</option>
-                                                      @endforeach
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Зүтгүүрийн дугаар</label>
-                                                  <select class="form-control select2" id="zas_zutnumber" name="zas_zutnumber" >
-
-
-                                                  </select>
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Секц</label>
-                                                  <select class="form-control select2" id="zas_sekts" name="zas_sekts" >
-                                                      <option value="0">Бүгд</option>
-
-                                                          <option value= "А">А</option>
-                                                      <option value= "Б">Б</option>
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Хэддүгээр</label>
-                                                  <select class="form-control select2" id="zas_sekts_num" name="zas_sekts_num" >
-
-                                                      <option value="0">Бүгд</option>
-                                                      <option value="1">1</option>
-                                                      <option value="2">2</option>
-                                                      <option value="3">3</option>
-                                                      <option value="4">4</option>
-                                                      <option value="5">5</option>
-                                                      <option value="6">6</option>
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Урсгал засварын томьёолол</label>
+                                                  <label for="name">  Илчит тэрэгний эд анги</label>
+                                                  <input type="text" class="form-control inputtext hidden" id="zasid" name="zasid">
                                                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                  <select class="form-control select2" id="zas_type" name="zas_type" >
+                                                  <select class="form-control select2" id="mat_part" name="mat_part" >
 
-                                                      <option value= "1"> Төлөвлөгөөт </option>
-                                                      <option value= "2"> Төлөвлөгөөт бус </option>
-                                                      <option value= "3"> Хоорондын засвар </option>
-                                                  </select>
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Урсгал засварын нэр</label>
-                                                  <select class="form-control select2" id="zas_rep" name="zas_rep" >
-                                                      @foreach($rep as $reps)
-                                                          <option value= "{{$reps->rep_id}}" tag="{{$reps->rep_name}}"> {{$reps->rep_name}}</option>
-                                                      @endforeach
-                                                  </select>
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Засварт орсон огноо</label>
-                                                  <input type="text" required="true" class="form-control inputtext" id="zas_begindate" name="zas_begindate" >
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Засварт гарсан огноо</label>
-                                                  <input type="text" required="true" class="form-control inputtext" id="zas_enddate" name="zas_enddate">
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Засвар хийсэн депо</label>
-                                                  <select class="form-control select2" id="zas_depo" name="zas_depo" >
-
-                                                      <option value="5">ТЧ-1</option>
-                                                      <option value="2">ТЧ-2</option>
-                                                      <option value="3">ТЧ-3</option>
-                                                      <option value="1">Сүхбаатар</option>
-                                                      <option value="13">Замын-Үүд</option>
                                                   </select>
                                               </div>
 
                                           </div>
 
+
                                           <div class="col-md-3">
                                               <div class="form-group">
-                                                  <label for="name">Гэмтэл</label>
-                                                  <select class="form-control select2" id="zas_gemtel" name="zas_gemtel" >
-                                                      <option value="0">Төлөвлөгөөт засварын дагуу</option>
-                                                      @foreach($break as $breaks)
-                                                          <option value= "{{$breaks->gemtel_id}}" tag="{{$breaks->gemtel_id}}"> {{$breaks->gemtel_type}}-{{$breaks->gemtel_name}}</option>
-                                                      @endforeach
+                                                  <label for="name">Авсан эд ангийн сери</label>
+                                                  <select class="form-control select2" id="mat_avsanseri" name="mat_avsanseri" >
+
+
+                                                  </select>
+
+
+                                              </div>
+                                          </div>
+                                          <div class="col-md-3">
+                                              <div class="form-group">
+                                                  <label for="name">Авсан эд ангийн дугаар</label>
+                                                  <select class="form-control select2" id="mat_avsandugaar" name="mat_avsandugaar" >
+
+
                                                   </select>
                                               </div>
-
                                           </div>
+                                          <div class="col-md-3">
+                                              <div class="form-group">
+                                                  <label for="name">Тавьсан эд ангийн сери</label>
+                                                  <select class="form-control select2" id="mat_tavisanseri" name="mat_tavisanseri" >
 
+
+                                                  </select>
+
+
+                                              </div>
+                                          </div>
+                                          <div class="col-md-3">
+                                              <div class="form-group">
+                                                  <label for="name">Тавьсан эд ангийн дугаар</label>
+                                                  <input type="text" class="form-control inputtext" id="mat_tavisandugaar" name="mat_tavisandugaar">
+                                              </div>
+                                          </div>
 
                                       </div>
+                                      <table class="table table-bordered table-hover" id="zasdetail">
+                                          <thead>
+                                          <tr>
 
 
+                                              <th>Эд ангийн төрөл</th>
+                                              <th>Авсан эд ангийн сери </th>
+                                              <th>Авсан эд  ангийн дугаар</th>
+                                              <th>Тавьсан эд ангийн сери </th>
+                                              <th>Тавьсан эд  ангийн дугаар</th>
+                                              <th></th>
+                                          </tr>
+                                          </thead>
+                                          <tbody>
+
+                                          </tbody>
+                                      </table>
                                       <div class="col-md-12">
                                           <div class="pull-right">
-                                              <button class="btn btn-default submit">Хадгалах</button>
+                                              <button class="btn btn-default">Хадгалах</button>
                                           </div>
 
                                       </div>
-                          </form>
-                              </div>
-                              <div id="menu1" class="tab-pane fade ">
-                                  <form method="post" action="addzasdetail" id="formzasdetail">
-                                  <div class="col-md-12">
-                                      <div class="col-md-3">
-                                          <div class="form-group">
-                                              <label for="name">  Илчит тэрэгний эд анги</label>
-                                              <input type="text" class="form-control inputtext hidden" id="zasid" name="zasid">
-                                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                              <select class="form-control select2" id="mat_part" name="mat_part" >
-
-                                              </select>
-                                          </div>
-
-                                      </div>
-
-
-                                      <div class="col-md-3">
-                                          <div class="form-group">
-                                              <label for="name">Авсан эд ангийн сери</label>
-                                              <select class="form-control select2" id="mat_avsanseri" name="mat_avsanseri" >
-
-
-                                              </select>
-
-
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="form-group">
-                                              <label for="name">Авсан эд ангийн дугаар</label>
-                                              <select class="form-control select2" id="mat_avsandugaar" name="mat_avsandugaar" >
-
-
-                                              </select>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="form-group">
-                                              <label for="name">Тавьсан эд ангийн сери</label>
-                                              <select class="form-control select2" id="mat_tavisanseri" name="mat_tavisanseri" >
-
-
-                                              </select>
-
-
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="form-group">
-                                              <label for="name">Тавьсан эд ангийн дугаар</label>
-                                              <input type="text" class="form-control inputtext" id="mat_tavisandugaar" name="mat_tavisandugaar">
-                                          </div>
-                                      </div>
-
-                                  </div>
-                                  <table class="table table-bordered table-hover" id="zasdetail">
-                                      <thead>
-                                      <tr>
-
-
-                                          <th>Эд ангийн төрөл</th>
-                                          <th>Авсан эд ангийн сери </th>
-                                          <th>Авсан эд  ангийн дугаар</th>
-                                          <th>Тавьсан эд ангийн сери </th>
-                                          <th>Тавьсан эд  ангийн дугаар</th>
-                                          <th></th>
-                                      </tr>
-                                      </thead>
-                                      <tbody>
-
-                                      </tbody>
-                                  </table>
-                                  <div class="col-md-12">
-                                      <div class="pull-right">
-                                          <button class="btn btn-default">Хадгалах</button>
-                                      </div>
-
-                                  </div>
                                   </form>
                               </div>
-                          </div>
+
+
+
 
                       </div>
 
@@ -410,161 +267,15 @@
               <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                       <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Засварлах</h5>
+                          <h5 class="modal-title" id="exampleModalLongTitle">Эд анги бүртгэх</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                           </button>
                       </div>
                       <div class="modal-body">
 
-                          <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#home1">Үндсэн</a></li>
-                              <li><a data-toggle="tab" href="#menu11" id="menu112">Материал</a></li>
-
-                          </ul>
-                          <div class="tab-content">
-                              <div id="home1" class="tab-pane fade in active">
-                                  <form method="post"  action="updatezasunplan">
-                                      <div class="col-md-12">
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Татах хэсэг</label>
-                                                  <select class="form-control select2" id="upzas_owndepo" name="upzas_owndepo" >
-                                                      <option value="5">ТЧ-1</option>
-                                                      <option value="2">ТЧ-2</option>
-                                                      <option value="3">ТЧ-3</option>
-                                                      <option value="1">Сүхбаатар</option>
-                                                      <option value="13">Замын-Үүд</option>
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Зүтгүүрийн сери</label>
-                                                  <select class="form-control select2" id="upzas_seri" name="upzas_seri" required="true">
-                                                      <option value="0">Бүгд</option>
-                                                      @foreach($locserial as $locserials)
-                                                          <option value= "{{$locserials->sericode}}"> {{$locserials->sericode}} - {{$locserials->seriname}}</option>
-                                                      @endforeach
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Зүтгүүрийн дугаар</label>
-                                                  <input type="text" required="true" class="form-control inputtext" id="upzas_zutnumber" name="upzas_zutnumber" >
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Секц</label>
-                                                  <select class="form-control select2" id="upzas_sekts" name="upzas_sekts" >
-                                                      <option value="0">Бүгд</option>
-
-                                                      <option value= "А">А</option>
-                                                      <option value= "Б">Б</option>
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Хэддүгээр</label>
-                                                  <select class="form-control select2" id="upzas_sekts_num" name="upzas_sekts_num" >
-
-                                                      <option value="0">Бүгд</option>
-                                                      <option value="1">1</option>
-                                                      <option value="2">2</option>
-                                                      <option value="3">3</option>
-                                                      <option value="4">4</option>
-                                                      <option value="5">5</option>
-                                                      <option value="6">6</option>
-                                                  </select>
-
-                                              </div>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Урсгал засварын томьёолол</label>
-                                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                  <select class="form-control select2" id="upzas_type" name="upzas_type" >
-
-                                                      <option value= "1"> Төлөвлөгөөт </option>
-                                                      <option value= "2"> Төлөвлөгөөт бус </option>
-                                                      <option value= "3"> Хоорондын засвар </option>
-                                                  </select>
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Урсгал засварын нэр</label>
-                                                  <select class="form-control select2" id="upzas_rep" name="upzas_rep" >
-                                                      @foreach($rep as $reps)
-                                                          <option value= "{{$reps->rep_id}}" tag="{{$reps->rep_name}}"> {{$reps->rep_name}}</option>
-                                                      @endforeach
-                                                  </select>
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <input type="text" class="form-control inputtext hidden" id="upzasid" name="upzasid">
-                                              <div class="form-group">
-                                                  <label for="name">Засварт орсон огноо</label>
-                                                  <input type="text" required="true" class="form-control inputtext" id="upzas_begindate" name="upzas_begindate" >
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Засварт гарсан огноо</label>
-                                                  <input type="text" required="true" class="form-control inputtext" id="upzas_enddate" name="upzas_enddate">
-                                              </div>
-
-                                          </div>
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Засвар хийсэн депо</label>
-                                                  <select class="form-control select2" id="upzas_depo" name="upzas_depo" >
-
-                                                      <option value="5">ТЧ-1</option>
-                                                      <option value="2">ТЧ-2</option>
-                                                      <option value="3">ТЧ-3</option>
-                                                      <option value="1">Сүхбаатар</option>
-                                                      <option value="13">Замын-Үүд</option>
-                                                  </select>
-                                              </div>
-
-                                          </div>
-
-                                          <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <label for="name">Гэмтэл</label>
-                                                  <select class="form-control select2" id="upzas_gemtel" name="upzas_gemtel" >
-                                                      @foreach($break as $breaks)
-                                                          <option value= "{{$breaks->gemtel_id}}" tag="{{$breaks->gemtel_id}}"> {{$breaks->gemtel_type}}-{{$breaks->gemtel_name}}</option>
-                                                      @endforeach
-                                                  </select>
-                                              </div>
-
-                                          </div>
 
 
-                                      </div>
-
-
-                                      <div class="col-md-12">
-                                          <div class="pull-right">
-                                              <button class="btn btn-default submit">Хадгалах</button>
-                                          </div>
-
-                                      </div>
-                                  </form>
-                              </div>
-                              <div id="menu11" class="tab-pane fade ">
                                   <form method="post" action="updatezasdetail" id="formupdatedetail">
                                       <div class="col-md-12">
                                           <div class="col-md-3">
@@ -598,10 +309,7 @@
                                           <div class="col-md-3">
                                               <div class="form-group">
                                                   <label for="name">Авсан эд ангийн дугаар</label>
-                                                  <select class="form-control select2" id="upmat_avsandugaar" name="upmat_avsandugaar" >
-
-
-                                                  </select>
+                                                  <input type="text" class="form-control inputtext" id="upmat_avsandugaar" name="upmat_avsandugaar">
                                               </div>
                                           </div>
                                           <div class="col-md-3">
@@ -647,8 +355,7 @@
 
                                       </div>
                                   </form>
-                              </div>
-                          </div>
+
 
                       </div>
 
@@ -966,22 +673,7 @@ detail(marsh);
                       });
                   });
                   $('#upmat_part').change(function(){
-                      var itag1=$('#upzas_zutnumber').val();
-                      var itag=$('#upzas_seri').val();
-                      var itag2=$(this).val();
-                      console.log(itag);
-                      console.log(itag1);
-                      console.log(itag2);
-                      $.get('getseri/'+itag+'/'+itag1+'/'+itag2,function(data){
-                          $('#upmat_avsanseri').empty();
-                          $.each(data,function(i,qwe){
-                              $('#upmat_avsanseri').append($('<option>', {
-                                  value: qwe.part_seri_id,
-                                  id: qwe.part_seri_id,
-                                  text: qwe.seri_name
-                              })).trigger('change');
-                          });
-                      });
+
                       $.get('getnewseri/'+itag2,function(data){
                           $('#upmat_tavisanseri').empty();
                           $.each(data,function(i,qwe){
@@ -994,23 +686,17 @@ detail(marsh);
                       });
                   });
                   $('#mat_part').change(function(){
-                      var itag1=$('#zas_zutnumber').val();
-                      var itag=$('#zas_seri').val();
+
                       var itag2=$(this).val();
-                      $.get('getseri/'+itag+'/'+itag1+'/'+itag2,function(data){
-                          $('#mat_avsanseri').empty();
-                          $.each(data,function(i,qwe){
-                              $('#mat_avsanseri').append($('<option>', {
-                                  value: qwe.part_seri_id,
-                                  id: qwe.part_seri_id,
-                                  text: qwe.seri_name
-                              })).trigger('change');
-                          });
-                      });
                       $.get('getnewseri/'+itag2,function(data){
                           $('#mat_tavisanseri').empty();
                           $.each(data,function(i,qwe){
                               $('#mat_tavisanseri').append($('<option>', {
+                                  value: qwe.seri_id,
+                                  id: qwe.seri_id,
+                                  text: qwe.seri_name
+                              })).trigger('change');
+                              $('#mat_avsanseri').append($('<option>', {
                                   value: qwe.seri_id,
                                   id: qwe.seri_id,
                                   text: qwe.seri_name

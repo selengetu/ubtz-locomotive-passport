@@ -60,7 +60,7 @@ class TailanController extends Controller
         $part=Part::orderby('part_name')->get();
         $rep=Rep::all();
         $break=Gemtel::all();
-        $zasunplan = DB::table('V_ZAS_SOLILT')->get();
+        $zasunplan = DB::table('V_ZASPLAN')->get();
         $zasdetail = DB::table('V_ZAS_SOLILT_DETAIL')->get();
         $locserial=LocSerial::orderBy('sericode', 'ASC')->get();
         $startdate= Carbon::today()->subDays(10)->toDateString();
@@ -68,20 +68,6 @@ class TailanController extends Controller
         $machinist= Input::get('machinist');
         $z= Input::get('zurch_type');
         $query = "";
-        if ($machinist!=NULL && $machinist !=0) {
-            $query.=" and mashcode = '".$machinist."'";
-        }
-        else
-        {
-            $query.=" ";
-        }
-        if ($z!=NULL && $z!=0) {
-            $query.=" and fault_no = '".$z."'";
-        }
-        else
-        {
-            $query.=" ";
-        }
         if ($startdate !=0 && $startdate && $enddate !=0 && $enddate !=NULL) {
             $query.=" and arrtime between TO_DATE( '".$startdate."' , 'yyyy/mm/dd') and TO_DATE( '".$enddate."', 'yyyy/mm/dd')";
         }

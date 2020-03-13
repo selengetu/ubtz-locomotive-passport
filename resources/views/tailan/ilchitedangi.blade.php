@@ -137,38 +137,38 @@
                       <tr>
                           <td>{{$no}}</td>
 
-                          <td>{{$zasunplans->seriname}} - {{$zasunplans->solilt_zutnumber}}</td>
-                          <td>{{$zasunplans->solilt_sekts}} - {{$zasunplans->solilt__sekts_num}}</td>
-                          <td>{{$zasunplans->solilt_begintime}}</td>
-                          <td>{{$zasunplans->solilt_endtime}}</td>
+                          <td>{{$zasunplans->seriname}} - {{$zasunplans->zutnumber}}</td>
+                          <td>{{$zasunplans->sec}}</td>
+                          <td>{{$zasunplans->repindate}}</td>
+                          <td>{{$zasunplans->repoutdate}}</td>
 
-                          <td>{{$zasunplans->rep_name}}</td>
+                          <td>{{$zasunplans->repname}}</td>
                           <td>
-                              @if ($zasunplans->solilt_depo == 5)
+                              @if ($zasunplans->depocode == 5)
                                   ТЧ-1
-                              @elseif ($zasunplans->solilt_depo == 2)
+                              @elseif ($zasunplans->depocode == 2)
                                   ТЧ-2
-                              @elseif ($zasunplans->solilt_depo == 3)
+                              @elseif ($zasunplans->depocode == 3)
                                   ТЧ-3
-                              @elseif ($zasunplans->solilt_depo == 1)
+                              @elseif ($zasunplans->depocode == 1)
                                   Сүхбаатар
-                              @elseif ($zasunplans->solilt_depo == 13)
+                              @elseif ($zasunplans->depocode == 13)
                                   Замын-Үүд
                               @endif
                           </td>
                           <td>{{$zasunplans->gemtel_name}}</td>
                           <td>      @foreach($zasdetail as $zasdetails)
-                                  @if($zasunplans->solilt_id == $zasdetails->solilt_id)
+                                  @if($zasunplans->repairid == $zasdetails->solilt_id)
                                       {{$zasdetails->seri_name}} -  {{$zasdetails->solilt_num}}  <br>
                                   @endif
                               @endforeach</td>
                           <td>      @foreach($zasdetail as $zasdetails)
-                                  @if($zasunplans->solilt_id == $zasdetails->solilt_id)
+                                  @if($zasunplans->repairid == $zasdetails->solilt_id)
                                       {{$zasdetails->eseri_name}}  -  {{$zasdetails->solilt_enum}} <br>
                                   @endif
                               @endforeach</td>
                           <td>      @foreach($zasdetail as $zasdetails)
-                                  @if($zasunplans->solilt_id == $zasdetails->solilt_id)
+                                  @if($zasunplans->repairid == $zasdetails->solilt_id)
                                       {{$zasdetails->part_name}}  <br>
                                   @endif
                               @endforeach</td>

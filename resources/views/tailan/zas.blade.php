@@ -133,26 +133,19 @@
                           <td>{{$no}}</td>
 
                           <td>{{$zasunplans->seriname}} </td>
-                          <td>{{$zasunplans->solilt_zutnumber}}</td>
+                          <td>{{$zasunplans->zutnumber}}</td>
 
-                          <td>@if ($zasunplans->solilt_zastype == 1)
-                                  Төлөвлөгөөт
-                              @elseif ($zasunplans->solilt_zastype == 2)
-                                  Төлөвлөгөөт бус
-                              @elseif ($zasunplans->solilt_zastype == 3)
-                                  Хоорондын засвар
-                              @endif
-                          </td>
-                          <td>{{$zasunplans->rep_name}}</td>
-                          <td>{{$zasunplans->solilt_begintime}}</td>
-                          <td>{{$zasunplans->solilt_endtime}}</td>
+                          <td>{{$zasunplans->zastype_name}}</td>
+                          <td>{{$zasunplans->repshname}}</td>
+                          <td>{{$zasunplans->repindate}}</td>
+                          <td>{{$zasunplans->repoutdate}}</td>
                           <td>{{$zasunplans->gemtel_name}}</td>
                           <td>
-                              @if ($zasunplans->solilt_depo == 1)
+                              @if ($zasunplans->depocode == 1)
                                   ТЧ-1
-                              @elseif ($zasunplans->solilt_depo == 2)
+                              @elseif ($zasunplans->depocode == 2)
                                   ТЧ-2
-                              @elseif ($zasunplans->solilt_depo == 3)
+                              @elseif ($zasunplans->depocode == 3)
                                   ТЧ-3
                               @endif
                           </td>
@@ -190,29 +183,26 @@
                                     <td>{{$no}}</td>
 
                                     <td>{{$zasunplans->seriname}} </td>
-                                    <td>{{$zasunplans->solilt_zutnumber}}</td>
+                                    <td>{{$zasunplans->zutnumber}}</td>
 
-                                    <td>@if ($zasunplans->solilt_zastype == 1)
-                                            Төлөвлөгөөт
-                                        @elseif ($zasunplans->solilt_zastype == 2)
-                                            Төлөвлөгөөт бус
-                                        @endif
+                                    <td>
                                     </td>
-                                    <td>{{$zasunplans->rep_name}}</td>
-                                    <td>{{$zasunplans->solilt_begintime}}</td>
-                                    <td>{{$zasunplans->solilt_endtime}}</td>
+                                    <td>{{$zasunplans->repname}}</td>
+                                    <td>{{$zasunplans->repindate}}</td>
+                                    <td>{{$zasunplans->repoutdate}}</td>
                                     <td>{{$zasunplans->gemtel_name}}</td>
                                     <td>
-                                        @if ($zasunplans->solilt_depo == 1)
+                                        @if ($zasunplans->depocode == 1)
                                             ТЧ-1
-                                        @elseif ($zasunplans->solilt_depo == 2)
+                                        @elseif ($zasunplans->depocode == 2)
                                             ТЧ-2
-                                        @elseif ($zasunplans->solilt_depo == 3)
+                                        @elseif ($zasunplans->depocode == 3)
                                             ТЧ-3
                                         @endif
                                     </td>
 
 
+                                </tr>
                                 </tr>
                                 <?php $no++; ?>
                             @endforeach

@@ -34,7 +34,7 @@ class ZasController extends Controller
         $locserial=LocSerial::all();
         $startdate= Carbon::today()->subDays(30)->toDateString();
         $enddate=  Carbon::today()->toDateString();
-        $zasunplan = DB::table('V_ZAS_SOLILT')->get();
+        $zasunplan = DB::table('V_ZASPLAN')->get();
 
         return view('tailan.zas')->with(['zasunplan' => $zasunplan,'locserial' => $locserial, 'startdate' =>$startdate, 'enddate' => $enddate]);
     }
