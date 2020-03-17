@@ -10,14 +10,16 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-  
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus placeholder="И-мейл">
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                            <div class="col-md-6">
+                                <input id="login" type="text"
+                                       class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}"
+                                       name="login" required placeholder="Нэвтрэх нэр" value="{{ old('username') ?: old('email') }}" required autofocus>
+
+                                @if ($errors->has('username') || $errors->has('email'))
+                                    <span class="invalid-feedback">
+                <strong>{{ $errors->first('username') ?: $errors->first('email') }}</strong>
+            </span>
                                 @endif
                             </div>
                         </div>
@@ -109,7 +111,7 @@
                 z-index: 2;
             }
 
-            .login input[type=email]{
+            .login input[type=text]{
                 width: 250px;
                 height: 30px;
                 background: #fff;
