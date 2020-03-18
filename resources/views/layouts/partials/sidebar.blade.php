@@ -78,8 +78,8 @@
          </a>
 
      </li>
-                         <li class="nav-item  ">
-                             <a href="{{ route('zasunplan') }}" class="nav-link nav-toggle">
+                         <li class="nav-item">
+                             <a href="{{ route('zasplan') }}" class="nav-link nav-toggle">
                                  <i class="icon-note"></i>
                                  <span class="title">Засвар</span>
                              </a>
