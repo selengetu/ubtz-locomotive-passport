@@ -54,12 +54,10 @@ Route::post('/addzasadd','ZasplanController@storeadd');
 Route::post('/addzasbaig','ZasplanController@storebaig');
 Route::post('/addzasmat','ZasplanController@storemat');
 
-Route::match(['get', 'post'],'/zasunplan', 'ZasunplanController@index')->name('zasunplan');
+Route::match(['get', 'post'],'/zasunplan', 'ZasplanController@index')->name('zasunplan');
 Route::get('/destroyzasunplan/{id}/delete', ['as' => 'zasunplan.destroy', 'uses' => 'ZasunplanController@destroy']);
-Route::post('/addzasunplan','ZasunplanController@store');
 Route::post('/addzasdetail','ZasunplanController@storedetail');
 Route::post('/updatezasdetail','ZasunplanController@updatestoredetail');
-Route::post('/updatezasunplan','ZasunplanController@update');
 Route::get('/zasunplanfill/{id?}',function($id = 0){
     $dt=DB::table('ZAS_SOLILT')->where('solilt_id','=',$id)->get();
     return $dt;
