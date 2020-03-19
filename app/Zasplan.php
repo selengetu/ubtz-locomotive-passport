@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Zasplan extends Model
 {
      
-	protected $table='ZUTGUUR.ZASPLAN';
+	protected $table='ZASPLAN';
     protected $primaryKey = 'REPAIRID';
 }

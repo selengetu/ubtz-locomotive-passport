@@ -266,6 +266,28 @@
 
                                 </tbody>
                             </table>
+                            <br>
+                            <table class="table table-striped  table-bordered table-hover" id="zasdetail">
+                                          <thead style="background-color: #81b5d5; color: #fff">
+                                          <tr>
+
+
+                                              <th>Эд ангийн төрөл</th>
+                                              <th>Авсан эд ангийн сери </th>
+                                              <th>Авсан эд  ангийн дугаар</th>
+                                              <th>Тавьсан эд ангийн сери </th>
+                                              <th>Тавьсан эд  ангийн дугаар</th>
+                                              <th></th>
+                                          </tr>
+                                          </thead>
+                                          <tbody>
+
+                                          </tbody>
+                                      </table>
+                            <input id="zsericode">
+              <input id="zzutnumber">
+            
+
                         </div>
                         </div>
         
@@ -649,6 +671,7 @@
 
                   </tbody>
               </table>   
+              
                               </div>
                               </form>
                           </div>
@@ -675,7 +698,7 @@
                               <div id="home" class="tab-pane fade in active">
                                   <form method="post" action="addzasdetail" id="formzasdetail">
                                       <div class="col-md-12">
-                                         
+                                      {{ csrf_field() }}
                                           <div class="col-md-3">
                                               <div class="form-group">
                                                   <label for="name">Авсан эд ангийн сери</label>
@@ -689,6 +712,8 @@
                                           </div>
                                           <div class="col-md-3">
                                               <div class="form-group">
+                                                  <input id="zpart" name="zpart" class="hidden">
+                                                  <input id="zrepairid" name="zrepairid" class="hidden">
                                                   <label for="name">Авсан эд ангийн дугаар</label>
                                                   <select class="form-control select2" id="mat_avsandugaar" name="mat_avsandugaar" >
 
@@ -715,23 +740,7 @@
                                           </div>
 
                                       </div>
-                                      <table class="table table-bordered table-hover" id="zasdetail">
-                                          <thead>
-                                          <tr>
-
-
-                                              <th>Эд ангийн төрөл</th>
-                                              <th>Авсан эд ангийн сери </th>
-                                              <th>Авсан эд  ангийн дугаар</th>
-                                              <th>Тавьсан эд ангийн сери </th>
-                                              <th>Тавьсан эд  ангийн дугаар</th>
-                                              <th></th>
-                                          </tr>
-                                          </thead>
-                                          <tbody>
-
-                                          </tbody>
-                                      </table>
+                                    
                                       <div class="col-md-12">
                                           <div class="pull-right">
                                               <button class="btn btn-default">Хадгалах</button>
@@ -830,6 +839,8 @@ $('#repoutdate').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on('dp.change', fu
               $(document).ready(function() {
                   getaddname(1);
                   getgemtel(101);
+                 
+                      
                   $('#example').DataTable( {
 
                       "language": {
@@ -857,6 +868,8 @@ $('#repoutdate').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on('dp.change', fu
               $("#planzas tbody").empty();
               $.each(data,function(i,qwe1){
                   console.log(qwe1);
+                  $('#zrepairid').val(qwe1.repairid);
+                  getzasdetail( $('#zrepairid').val());
                   var sHtml1 = "<tr>" +
                       "   <td class='m1'>" + qwe1.seriname +"-"+ qwe1.zutnumber + "</td>" +
                       "   <td class='m2'>" + qwe1.repname + "</td>" +
@@ -873,7 +886,7 @@ $('#repoutdate').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on('dp.change', fu
                       "</tr>";
 
                   $("#planzas tbody").append(sHtml1);
-
+                 
               });
           });
           $.get('getplanbaig/'+itag,function(data){
@@ -916,44 +929,27 @@ $('#repoutdate').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on('dp.change', fu
                       "   <td class='m1'>" + qwe1.part_name + "</td>" +
                       "   <td class='m2'>" + qwe1.unitname + "</td>" +
                       "   <td class='m2'>" + qwe1.mattoo + "</td>" +
-                      "<td>" +"<button type='button' id = "+ qwe1.part_name +"class='btn btn-primary shugaman' data-toggle='modal' data-target='#myModal2' data-backdrop='static' data-keyboard='false' style='background-color: #2EB9A8; border-color: #2EB9A8'><i class='fa fa-check-square-o' aria-hidden='true'></i></button></td>"
+                      "<td>" +"<button type='button' onclick='shugaman("+ qwe1.part_id +")' id = '"+ qwe1.part_id +"' class='btn btn-primary' data-toggle='modal' data-target='#myModal2' data-backdrop='static' data-keyboard='false' style='background-color: #2EB9A8; border-color: #2EB9A8'><i class='fa fa-check-square-o' aria-hidden='true'></i></button></td>"
                                   
                       "</tr>";
 
                   $("#planmat tbody").append(sHtml2);
-
+                  $("#zsericode").val(qwe1.sericode);
+                  $("#zzutnumber").val(qwe1.zutnumber);
+                  
               });
           });
+        
     } );
                   
-                            $('#mat_part').change(function(){
-
-                        var itag2=$(this).val();
-                        $.get('getnewseri/'+itag2,function(data){
-                            $('#mat_tavisanseri').empty();
-                            $.each(data,function(i,qwe){
-                                $('#mat_tavisanseri').append($('<option>', {
-                                    value: qwe.seri_id,
-                                    id: qwe.seri_id,
-                                    text: qwe.seri_name
-                                })).trigger('change');
-                                $('#mat_avsanseri').append($('<option>', {
-                                    value: qwe.seri_id,
-                                    id: qwe.seri_id,
-                                    text: qwe.seri_name
-                                })).trigger('change');
-                            });
-                        });
-                        });
+                    
                         $('#mat_avsanseri').change(function(){
-                        var itag1=$('#zas_zutnumber').val();
+                        var itag1=$('#zzutnumber').val();
 
-                        var itag=$('#zas_seri').val();
-
-                        var itag2=$('#mat_part').val();
+                        var itag=$('#zsericode').val();
 
                         var itag3=$(this).val();
-                        $.get('getnumber/'+itag+'/'+itag1+'/'+itag2+'/'+itag3,function(data){
+                        $.get('getnumber/'+itag+'/'+itag1+'/'+itag3,function(data){
                             $('#mat_avsandugaar').empty();
                             $.each(data,function(i,qwe){
                                 $('#mat_avsandugaar').append($('<option>', {
@@ -1035,7 +1031,8 @@ $('#repoutdate').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on('dp.change', fu
                               })).trigger('change');
                           });
                       });
-                  }
+                  }  
+         
         $('#formzasplan').submit(function(event){
         event.preventDefault();
 
@@ -1124,12 +1121,51 @@ $('#repoutdate').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on('dp.change', fu
         })
 
     });
+    $('#formzasdetail').submit(function(event){
+        event.preventDefault();
+        var itag =   $('#zrepairid').val();
+        $.ajax({
+            type: 'POST',
+            url: 'addzasdetail',
+            data: $('form#formzasdetail').serialize(),
+         success: function(result){
+          alert('Шугаман эд анги бүртгэгдлээ');
+         
+       getzasdetail(itag);
+         },
+  error: function (jqXHR, textStatus, errorThrown) {
+                  if (jqXHR.status == 500) {
+                      alert('Internal error: ' + jqXHR.responseText);
+                  } else {
+                      alert('Unexpected error.');
+                  }
+              }
+        })
+
+    });
               } );
           </script>
           <script>
           $('#myModal1').on('hidden.bs.modal', function () {
  location.reload();
 })
+                    function getzasdetail(itag){
+                        $.get('getzasdetail/'+itag,function(data){
+                                            $("#zasdetail tbody").empty();
+                                            $.each(data,function(i,qwe1){
+                                                var sHtml1 = "<tr>" +
+                                                    "   <td class='m1'>" + qwe1.part_name + "</td>" +
+                                                    "   <td class='m2'>" + qwe1.seri_name + "</td>" +
+                                                    "   <td class='m2'>" + qwe1.solilt_num + "</td>" +
+                                                    "   <td class='m2'>" + qwe1.eseri_name + "</td>" +
+                                                    "   <td class='m2'>" + qwe1.solilt_enum + "</td>" +
+                                                    "</tr>";
+
+                                                $("#zasdetail tbody").append(sHtml1);
+
+                                            });
+                                        });
+                    }
               function getplanbaig(itag){
                         $.get('getplanbaig/'+itag,function(data){
                           $("#tableplanbaig tbody").empty();
@@ -1144,6 +1180,26 @@ $('#repoutdate').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on('dp.change', fu
                           });
                       });
                     }
+                         function shugaman(itag2){
+
+                            $('#zpart').val(itag2);
+                        $.get('getnewseri/'+itag2,function(data){
+                            $('#mat_tavisanseri').empty();
+                            $.each(data,function(i,qwe){
+                                
+                                $('#mat_tavisanseri').append($('<option>', {
+                                    value: qwe.seri_id,
+                                    id: qwe.seri_id,
+                                    text: qwe.seri_name
+                                })).trigger('change');
+                                $('#mat_avsanseri').append($('<option>', {
+                                    value: qwe.seri_id,
+                                    id: qwe.seri_id,
+                                    text: qwe.seri_name
+                                })).trigger('change');
+                            });
+                        });
+                        }
                     function getplanadd(itag){
                         $.get('getplanadd/'+itag,function(data){
                           $("#tableplanadd tbody").empty();

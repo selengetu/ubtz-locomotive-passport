@@ -69,15 +69,15 @@ class ZasunplanController extends Controller
     {
         $d = Zaspart::where('part_det_id', Request::input('mat_part'))->where('part_seri_id', Request::input('mat_avsanseri'))->where('part_num', Request::input('mat_avsandugaar'))->value('part_id');
         $zaspart = new Zaspart;
-        $zaspart->part_det_id = Request::input('mat_part');
+        $zaspart->part_det_id = Request::input('zpart');
         $zaspart->part_seri_id = Request::input('mat_tavisanseri');
         $zaspart->part_num = Request::input('mat_tavisandugaar');
         $zaspart->part_date = Carbon::now()->toDateString();
         $zaspart->save();
 
         $solilt = new Solilt;
-        $solilt->solilt_id = Request::input('repairid');
-        $solilt->solilt_part_id = Request::input('mat_part');
+        $solilt->solilt_id = Request::input('zrepairid');
+        $solilt->solilt_part_id = Request::input('zpart');
         $solilt->solilt_seri_id = Request::input('mat_avsanseri');
         $solilt->solilt_num = Request::input('mat_avsandugaar');
         $solilt->solilt_eseri_id = Request::input('mat_tavisanseri');
@@ -85,10 +85,6 @@ class ZasunplanController extends Controller
         $solilt->save();
 
         ZasZut::where('zas_partid', $d)->update(['zas_isavailable'=> '0']);
-
-
-
-
     }
     public function updatestoredetail()
     {
