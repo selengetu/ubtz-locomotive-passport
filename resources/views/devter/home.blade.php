@@ -218,8 +218,7 @@
                                                               <option value="5">ТЧ-1</option>
                                                               <option value="2">ТЧ-2</option>
                                                               <option value="3">ТЧ-3</option>
-                                                              <option value="1">Сүхбаатар</option>
-                                                              <option value="13">Замын-Үүд</option>
+                                                    
                                                           </select>
 
                                                       </div>
@@ -438,8 +437,7 @@
                           <option value="5">ТЧ-1</option>
                           <option value="2">ТЧ-2</option>
                           <option value="3">ТЧ-3</option>
-                          <option value="1">Сүхбаатар</option>
-                          <option value="13">Замын-Үүд</option>
+                        
                       </select>
 
                   </div>
