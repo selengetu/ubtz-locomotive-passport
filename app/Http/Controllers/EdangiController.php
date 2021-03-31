@@ -107,7 +107,12 @@ class EdangiController extends Controller
         {
             $query.=" ";
         }
-        activity()->log('Login');
+        DB::table('activity_log')->insert(
+            array(
+                   'logname'     =>   'Login', 
+                   'causer_id'   =>   Auth::user()->id
+            )
+       );
         $zaspart=DB::select('select * from V_ZASZUT t where 1=1 '.$query. '');
         return view('devter.home')->with(['seri'=>$seri,'locserial'=>$locserial,'loc'=>$loc,'loc_zutnumber'=>$loc_zutnumber,'zpart'=>$zpart,'part'=>$part,'stat'=>$stat, 'zaspart' => $zaspart, 'startdate' =>$startdate, 'enddate' => $enddate, 'loc_seri' =>$loc_seri, 'loc_part' => $loc_part, 'depo' => $depo]);
     }
