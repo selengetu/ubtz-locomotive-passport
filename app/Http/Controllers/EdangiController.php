@@ -109,7 +109,7 @@ class EdangiController extends Controller
         }
         DB::table('activity_log')->insert(
             array(
-                   'logname'     =>   'Login', 
+                   'log_name'     =>   'Login', 
                    'causer_id'   =>   Auth::user()->id
             )
        );
