@@ -112,7 +112,7 @@ class EdangiController extends Controller
                    'log_name'     =>   'Login', 
                    'description'     =>   'Login', 
                    'causer_id'   =>   Auth::user()->id,
-                   'created_at'     =>   Carbon\Carbon::now(), 
+                   'created_at'     =>   Carbon::now(), 
             )
        );
         $zaspart=DB::select('select * from V_ZASZUT t where 1=1 '.$query. '');
