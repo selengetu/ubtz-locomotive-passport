@@ -17,6 +17,7 @@ use Spatie\Activitylog\Models\Activity;
 use \Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 class EdangiController extends Controller
 {
     /**
@@ -106,7 +107,7 @@ class EdangiController extends Controller
         {
             $query.=" ";
         }
-
+        activity()->log('Login');
         $zaspart=DB::select('select * from V_ZASZUT t where 1=1 '.$query. '');
         return view('devter.home')->with(['seri'=>$seri,'locserial'=>$locserial,'loc'=>$loc,'loc_zutnumber'=>$loc_zutnumber,'zpart'=>$zpart,'part'=>$part,'stat'=>$stat, 'zaspart' => $zaspart, 'startdate' =>$startdate, 'enddate' => $enddate, 'loc_seri' =>$loc_seri, 'loc_part' => $loc_part, 'depo' => $depo]);
     }

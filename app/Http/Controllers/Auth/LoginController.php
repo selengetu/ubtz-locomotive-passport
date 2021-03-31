@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Spatie\Activitylog\Models\Activity;
 class LoginController extends Controller
 {
     /*
@@ -19,10 +19,9 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
     /**
      * Where to redirect users after login.
-     *
+        
      * @var string
      */
     protected $redirectTo = '/home';
@@ -40,11 +39,10 @@ class LoginController extends Controller
     public function findUsername()
     {
         $login = request()->input('login');
-
+    
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
+     
         request()->merge([$fieldType => $login]);
-
         return $fieldType;
     }
 
