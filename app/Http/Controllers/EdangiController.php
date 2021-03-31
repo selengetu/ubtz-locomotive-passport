@@ -17,7 +17,7 @@ use Spatie\Activitylog\Models\Activity;
 use \Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Activitylog\Models\Activity;
+
 class EdangiController extends Controller
 {
     /**
