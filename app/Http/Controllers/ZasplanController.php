@@ -126,6 +126,14 @@ class ZasplanController extends Controller
         }
         $zasplan->save();
         $max =DB::select("select max(repairid) as repairid from ZASPLAN");
+        DB::table('activity_log')->insert(
+            array(
+                   'log_name'     =>   'Add zaszut', 
+                   'description'     =>  $max, 
+                   'causer_id'   =>   Auth::user()->id,
+                   'created_at'     =>   Carbon::now(), 
+            )
+       );
          return $max[0]->repairid;
     }
     public function storeadd()

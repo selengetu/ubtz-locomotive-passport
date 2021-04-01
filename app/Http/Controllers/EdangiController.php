@@ -144,18 +144,35 @@ class EdangiController extends Controller
         $zaszut->zas_partid = $max;
         $zaszut->zas_begindate=Request::input('ed_tavisanognoo');
         $zaszut->save();
-
+        $p=DB::getPdo()->lastInsertId();
+        DB::table('activity_log')->insert(
+            array(
+                   'log_name'     =>   'Add zaszut', 
+                   'description'     =>  $p, 
+                   'causer_id'   =>   Auth::user()->id,
+                   'created_at'     =>   Carbon::now(), 
+            )
+       );
         return Redirect('home');
     }
     public function update(Request $request)
     {
+        
         Zaspart::where('part_id', Request::input('angi_id'))
             ->update(['part_det_id' => Request::input('angi_part'),'part_seri_id' => Request::input('angi_seri'),'part_num' => Request::input('angi_dugaar'),
                 'part_date' => Request::input('angi_ognoo'),'tr3_guilt' => Request::input('angi_tr3_guilt'),'tr2_guilt' => Request::input('angi_tr2_guilt'),'zp_guilt' => Request::input('angi_zp_guilt'),'tr3_date' => Request::input('angi_tr3_date'),'tr2_date' => Request::input('angi_tr2_date')]);
         ZasZut::where('zas_partid', Request::input('angi_id'))
             ->update(['zas_seri' => Request::input('angi_loc'),'zas_zutnumber' => Request::input('angi_zutnum'),'zas_depo' => Request::input('angi_depo'),
                 'zas_sekts' => Request::input('angi_sekts'), 'zas_sekts_num' => Request::input('angi_sekts_num'), 'zas_begindate' => Request::input('angi_tavisanognoo')]);
-
+                $p=DB::getPdo()->lastInsertId();
+                DB::table('activity_log')->insert(
+                    array(
+                           'log_name'     =>   'Delete zaszut', 
+                           'description'     => Request::input('angi_id'), 
+                           'causer_id'   =>   Auth::user()->id,
+                           'created_at'     =>   Carbon::now(), 
+                    )
+               );
         return Redirect('home');
     }
 
